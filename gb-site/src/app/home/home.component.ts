@@ -21,12 +21,11 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
   ngAfterViewInit(): void {
     const el = this.container.nativeElement;
         this.scene = new THREE.Scene();
-        this.scene.background = new THREE.Color(0x000014);
 
         this.camera = new THREE.PerspectiveCamera(35, el.clientWidth / el.clientHeight, 0.1, 1000);
         this.camera.position.z = 5.5;
 
-        this.renderer = new THREE.WebGLRenderer({ antialias: true });
+        this.renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
         this.renderer.setSize(el.clientWidth, el.clientHeight);
         el.appendChild(this.renderer.domElement);
 
