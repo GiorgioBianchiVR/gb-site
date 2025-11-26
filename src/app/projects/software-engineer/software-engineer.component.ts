@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 interface Technology {
   name: string;
@@ -25,6 +26,12 @@ export class SoftwareEngineerComponent {
   ];
 
   githubUrl = 'https://github.com/GiorgioBianchiVR';
+
+  constructor(private router: Router) {}
+
+  goHome(): void {
+    this.router.navigate(['/']);
+  }
 
   openGithub(): void {
     window.open(this.githubUrl, '_blank');
