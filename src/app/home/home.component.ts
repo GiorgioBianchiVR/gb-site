@@ -67,6 +67,8 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
     this.scene.add(ambient);
 
     const animate = () => {
+      knot.rotation.x += 0.005;
+      knot.rotation.y += 0.004;
       controls.update();
       this.renderer.render(this.scene, this.camera);
       this.frameId = requestAnimationFrame(animate);
