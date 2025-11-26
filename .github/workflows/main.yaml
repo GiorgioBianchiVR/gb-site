@@ -23,6 +23,11 @@ jobs:
     - name: Build Angular App
       run: npm run build
 
+    - name: Identify to git
+      run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+
     - name: Deploy to gh pages
       run: |
         npx angular-cli-ghpages --dir=dist/gb-site --no-silent
