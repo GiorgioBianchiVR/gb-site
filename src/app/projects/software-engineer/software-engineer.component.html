@@ -1,0 +1,38 @@
+<div class="software-engineer-container">
+  <!-- Description Section -->
+  <section class="description-section">
+    <p class="description-text">{{ description }}</p>
+  </section>
+
+  <!-- Technologies Section -->
+  <section class="technologies-section">
+    <h2 class="technologies-title">Technologies</h2>
+    <div class="technologies-grid">
+      <div *ngFor="let tech of technologies" class="tech-card">
+        <!-- SVG icon placeholder -->
+        <div class="tech-icon-wrapper">
+          <svg class="tech-icon" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <!-- Icon will be replaced with actual SVG -->
+            <circle cx="50" cy="50" r="45" fill="none" stroke="currentColor" stroke-width="2"/>
+            <text x="50" y="55" text-anchor="middle" dominant-baseline="middle" font-size="12" fill="currentColor">
+              {{ tech.icon | uppercase }}
+            </text>
+          </svg>
+        </div>
+        <p class="tech-name">{{ tech.name }}</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- GitHub Link Section -->
+  <section class="github-section">
+    <button (click)="openGithub()" class="github-button" aria-label="Visit GitHub profile">
+      <svg class="github-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <!-- GitHub icon placeholder -->
+        <circle cx="12" cy="12" r="11" fill="none" stroke="currentColor" stroke-width="1.5"/>
+        <text x="12" y="14" text-anchor="middle" font-size="10" fill="currentColor">GH</text>
+      </svg>
+      <span>Visit GitHub</span>
+    </button>
+  </section>
+</div>
