@@ -59,7 +59,7 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
     const knot = new THREE.Mesh(geometry, material);
     this.scene.add(knot);
 
-    const light = new THREE.PointLight(0x39fff0, 15.5);
+    const light = new THREE.PointLight(0xfff5b6, 8.5);
     light.position.set(5, 5, 5);
     this.scene.add(light);
 
