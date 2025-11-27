@@ -1,0 +1,26 @@
+<div class="accordion" id="accordion">
+  @for (section of sections; let index = $index; track index) {
+    <div class="accordion-item">
+      <h2 class="accordion-header" [id]="'heading' + index">
+        <button 
+          class="accordion-button" 
+          [class.collapsed]="!isExpanded(index)"
+          type="button" 
+          (click)="toggleCollapse(index)"
+          [attr.aria-expanded]="isExpanded(index)" 
+          [attr.aria-controls]="'collapse' + index">
+          {{ section.title }}
+        </button>
+      </h2>
+      <div 
+        [id]="'collapse' + index" 
+        class="accordion-collapse collapse" 
+        [class.show]="isExpanded(index)"
+        [attr.aria-labelledby]="'heading' + index">
+        <div class="accordion-body">
+          {{ section.content }}
+        </div>
+      </div>
+    </div>
+  }
+</div>

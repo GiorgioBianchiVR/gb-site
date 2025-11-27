@@ -1,0 +1,25 @@
+.accordion
+  margin-top: auto
+  margin-bottom: auto
+
+  .accordion-button
+    font-weight: 600
+    padding: 1rem
+    color: var(--fg)
+    background-color: var(--bg)
+    border: 1px solid var(--bg)
+
+    &:not(.collapsed)
+      color: var(--fg)
+      background-color: var(--bg)
+      box-shadow: none
+
+    &:focus
+      border-color: var(--accent)
+      outline: 0
+      box-shadow: 0 0 0 0.2rem var(--accent-secondary)
+
+  .accordion-body
+    padding: 1rem
+    background-color: var(--bg-secondary)
+    color: var(--fg)

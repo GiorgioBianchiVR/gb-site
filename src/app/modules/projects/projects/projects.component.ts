@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { CollapseService } from 'src/app/services/collapse.service';
 @Component({
   selector: 'app-projects',
   templateUrl: './projects.component.html',
@@ -7,6 +8,8 @@ import { Component } from '@angular/core';
 })
 export class ProjectsComponent {
 
-  constructor() {}
+  constructor(private collapseService: CollapseService) {
+    this.collapseService.initializeSections('assets/data/projects.json');
+  }
 
 }
