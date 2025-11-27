@@ -30,6 +30,9 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
 
   ngAfterViewInit(): void {
     const el = this.container.nativeElement;
+    const meshColor: THREE.ColorRepresentation = 0x39fff0;
+    const pointLightColor: THREE.ColorRepresentation = 0xfff5b6;
+    const ambientLightColor: THREE.ColorRepresentation = 0x404040;
     this.scene = new THREE.Scene();
 
     this.camera = new THREE.PerspectiveCamera(
@@ -52,18 +55,18 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
 
     const geometry = new THREE.TorusKnotGeometry(0.6, 0.2, 128, 16);
     const material = new THREE.MeshStandardMaterial({
-      color: 0x39fff0,
+      color: meshColor,
       metalness: 0.2,
       roughness: 0.5,
     });
     const knot = new THREE.Mesh(geometry, material);
     this.scene.add(knot);
 
-    const light = new THREE.PointLight(0xfff5b6, 8.5);
+    const light = new THREE.PointLight(pointLightColor, 8.5);
     light.position.set(5, 5, 5);
     this.scene.add(light);
 
-    const ambient = new THREE.AmbientLight(0x404040, 1.2);
+    const ambient = new THREE.AmbientLight(ambientLightColor, 1.2);
     this.scene.add(ambient);
 
     const animate = () => {
