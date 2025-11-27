@@ -1,0 +1,1 @@
+import{B as e,Fa as r,Fb as o}from"./chunk-62NOYBDP.js";var f=(()=>{let t=class t{};t.\u0275fac=function(m){return new(m||t)},t.\u0275mod=r({type:t}),t.\u0275inj=e({imports:[o]});let i=t;return i})();export{f as InchiostroModule};

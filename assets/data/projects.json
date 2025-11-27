@@ -1,0 +1,14 @@
+[
+    {
+    "title": "Project1",
+    "content": "This is a sample project description.",
+    "isCollapsed": false,
+    "link": "https://example.com/project1"
+  },
+  {
+    "title": "Project2",
+    "content": "This is another sample project description.",
+    "isCollapsed": true,
+    "link": "https://example.com/project2"
+  }
+]
