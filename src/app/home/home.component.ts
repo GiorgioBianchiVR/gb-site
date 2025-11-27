@@ -37,11 +37,9 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
 
     this.camera = new THREE.PerspectiveCamera(
       35,
-      el.clientWidth / el.clientHeight,
-      0.1,
-      1000
+      el.clientWidth / el.clientHeight
     );
-    this.camera.position.z = 5.5;
+    this.camera.position.z = 8.5;
 
     const controls = new OrbitControls(this.camera, el);
     controls.target.set(0, 0.5, 0);
