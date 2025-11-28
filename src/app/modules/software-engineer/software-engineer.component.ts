@@ -20,7 +20,7 @@ export class SoftwareEngineerComponent {
     { name: 'TypeScript', icon: 'typescript' },
     { name: 'HTML5', icon: 'html' },
     { name: 'CSS3', icon: 'css' },
-    { name: 'JavaScript', icon: 'js' },
+    { name: 'JavaScript', icon: 'javascript' },
     { name: 'Git', icon: 'git' },
     { name: 'Azure DevOps', icon: 'azure-devops' }
   ];

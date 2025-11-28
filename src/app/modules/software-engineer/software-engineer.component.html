@@ -12,17 +12,10 @@
     <div class="technologies-grid">
       @for(tech of technologies; track tech.name; let idx = $index, e = $even) {
           <div class="tech-card">
-            <!-- SVG icon placeholder -->
             <div class="tech-icon-wrapper">
-              <svg class="tech-icon" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                <!-- TODO Icon will be replaced with actual SVG -->
-                <circle cx="50" cy="50" r="45" fill="none" stroke="currentColor" stroke-width="2"/>
-                <text x="50" y="55" text-anchor="middle" dominant-baseline="middle" font-size="12" fill="currentColor">
-                  {{ tech.icon | uppercase }}
-                </text>
-              </svg>
+              <i [attr.class]="'bi bi-' + tech.icon +' fs-2'"></i>
             </div>
-            <p class="tech-name">{{ tech.name }}</p>
+            <!-- <p class="tech-name">{{ tech.name }}</p> -->
           </div>
       }
     </div>
@@ -31,11 +24,7 @@
   <!-- GitHub Link Section -->
   <section class="github-section">
     <button (click)="openGithub()" class="github-button" aria-label="Visit GitHub profile">
-      <svg class="github-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-        <!-- GitHub icon placeholder -->
-        <circle cx="12" cy="12" r="11" fill="none" stroke="currentColor" stroke-width="1.5"/>
-        <text x="12" y="14" text-anchor="middle" font-size="10" fill="currentColor">GH</text>
-      </svg>
+      <i class="bi bi-github"></i>
       <span>Visit GitHub</span>
     </button>
   </section>
