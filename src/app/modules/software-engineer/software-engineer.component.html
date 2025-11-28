@@ -1,6 +1,7 @@
 <app-go-home-button></app-go-home-button>
 
 <div class="software-engineer-container">
+  <!-- TODO fix animation for more than one line -->
   <!-- Description Section -->
   <section class="description-section typewriter">
     <p>{{ description }}</p>
@@ -23,8 +24,8 @@
 
   <!-- GitHub Link Section -->
   <section class="github-section">
-    <button (click)="openGithub()" class="github-button" aria-label="Visit GitHub profile">
-      <i class="bi bi-github"></i>
+    <button (click)="openGithub()" class="github-button d-flex align-items-center" aria-label="Visit GitHub profile">
+      <i class="bi bi-github fs-2"></i>
       <span>Visit GitHub</span>
     </button>
   </section>
