@@ -1,0 +1,1 @@
+import{B as e,Bb as o,Ea as r}from"./chunk-65GNOWQR.js";var f=(()=>{let t=class t{};t.\u0275fac=function(m){return new(m||t)},t.\u0275mod=r({type:t}),t.\u0275inj=e({imports:[o]});let i=t;return i})();export{f as InchiostroModule};

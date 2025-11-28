@@ -1,0 +1,1 @@
+import{B as r,Bb as e,Ea as o}from"./chunk-65GNOWQR.js";var p=(()=>{let t=class t{};t.\u0275fac=function(m){return new(m||t)},t.\u0275mod=o({type:t}),t.\u0275inj=r({imports:[e]});let i=t;return i})();export{p as PassionsModule};

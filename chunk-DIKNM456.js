@@ -1,1 +1,0 @@
-import{B as r,Fa as o,Fb as e}from"./chunk-62NOYBDP.js";var c=(()=>{let t=class t{};t.\u0275fac=function(m){return new(m||t)},t.\u0275mod=o({type:t}),t.\u0275inj=r({imports:[e]});let i=t;return i})();export{c as EducationModule};
