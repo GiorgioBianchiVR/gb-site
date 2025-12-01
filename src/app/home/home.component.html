@@ -1,10 +1,11 @@
 <div class="home-center">
   <div class="project-list">
-    <div class="project-item" (click)="open('work')">work</div>
-    <div class="project-item" (click)="open('education')">education</div>
-    <div class="project-item" (click)="open('projects')">projects</div>
-    <div class="project-item" (click)="open('inchiostro')">inchiostro</div>
-    <div class="project-item" (click)="open('passions')">passions</div>
+    <div id="work-link" class="project-item static-waving-blur" (click)="isWorkValid? open('work') : ''">work</div>
+    <div id="education-link" class="project-item static-waving-blur" (click)="isEducationValid? open('education') : ''">education</div>
+    <div id="projects-link" class="project-item static-waving-blur" (click)="isProjectsValid? open('projects') : ''">projects</div>
+    <div id="inchiostro-link" class="project-item static-waving-blur" (click)="isInchiostroValid? open('inchiostro') : ''">inchiostro</div>
+    <div id="passions-link" class="project-item static-waving-blur" (click)="isPassionsValid? open('passions') : ''">passions</div>
+    <div class="skip-interaction" (click)="skipInteraction()">skip interaction</div>
   </div>
   <div class="three-container" #container></div>
 </div>

@@ -12,15 +12,23 @@ import { OrbitControls } from 'three/examples/jsm/Addons.js';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
+  styleUrl: './home.component.sass',
   standalone: false,
 })
 export class HomeComponent implements AfterViewInit, OnDestroy {
+
   @ViewChild('container', { static: true })
   container!: ElementRef<HTMLDivElement>;
   renderer!: THREE.WebGLRenderer;
   scene!: THREE.Scene;
   camera!: THREE.PerspectiveCamera;
   frameId: number | null = null;
+
+  public isWorkValid: boolean = false;
+  public isEducationValid: boolean = false;
+  public isProjectsValid: boolean = false;
+  public isInchiostroValid: boolean = false;
+  public isPassionsValid: boolean = false;
 
   constructor(private router: Router) {}
 
@@ -68,6 +76,10 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
     this.scene.add(ambient);
 
     const animate = () => {
+      //Update camera position in zoomed in or out
+      if(this.camera.position.z < 7.2) {
+        this.camera.position.z += 0.0075;
+      }
       knot.rotation.x += 0.005;
       knot.rotation.y += 0.004;
       controls.update();
@@ -77,9 +89,31 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
     animate();
 
     window.addEventListener('resize', this.onResize);
+
+    controls.addEventListener('change', () => {
+      this.onZoomChange();
+    });
+  }
+
+  onZoomChange(): void {
+
+    const educationElement = document.getElementById('education-link') as HTMLDivElement | null;
+    if (educationElement && this.camera.position.z < 0.7) {
+      this.isEducationValid = true;
+      educationElement.classList.remove('static-waving-blur');
+      educationElement.classList.add('valid-project-item');
+      educationElement.style.filter = 'none';
+    } else if (educationElement && !this.isEducationValid && this.camera.position.z < 7.2) {
+      educationElement.classList.remove('static-waving-blur');
+      educationElement.style.filter = 'blur(' + this.camera.position.z + 'px) brightness(' + 7.2 / this.camera.position.z * 100 + '%)';
+      console.log(educationElement.style.filter);
+    } else if(!this.isEducationValid) {
+      educationElement?.classList.add('static-waving-blur');
+    }
   }
 
   onResize = () => {
+    console.log('resize event');
     const el = this.container.nativeElement;
     this.camera.aspect = el.clientWidth / el.clientHeight;
     this.camera.updateProjectionMatrix();
@@ -91,4 +125,25 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
     window.removeEventListener('resize', this.onResize);
     if (this.renderer) this.renderer.dispose();
   }
+
+  skipInteraction() {
+    this.isEducationValid = true;
+    this.validateElement('education-link');
+    this.isWorkValid = true;
+    this.validateElement('work-link');
+    this.isProjectsValid = true;
+    this.validateElement('projects-link');
+    this.isInchiostroValid = true;
+    this.validateElement('inchiostro-link');
+    this.isPassionsValid = true;
+    this.validateElement('passions-link');
+  }
+
+  validateElement(elementId: string): void {
+    const element = document.getElementById(elementId) as HTMLDivElement | null;
+    element?.classList.remove('static-waving-blur');
+    element?.classList.add('valid-project-item');
+    element? element.style =  '""' : '';
+  }
+
 }
