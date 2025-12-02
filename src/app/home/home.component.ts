@@ -33,6 +33,43 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
   private _clickCounter: number = 0;
   private _clickGoal: number = 50;
 
+  private _educationElement: HTMLDivElement | null = null;
+  public get educationElement(): HTMLDivElement | null {
+    return this._educationElement;
+  }
+  public set educationElement(value: HTMLDivElement | null) {
+    this._educationElement = value;
+  }
+  private _workElement: HTMLDivElement | null = null;
+  public get workElement(): HTMLDivElement | null {
+    return this._workElement;
+  }
+  public set workElement(value: HTMLDivElement | null) {
+    this._workElement = value;
+  }
+  private _inchiostroElement: HTMLDivElement | null = null;
+  public get inchiostroElement(): HTMLDivElement | null {
+    return this._inchiostroElement;
+  }
+  public set inchiostroElement(value: HTMLDivElement | null) {
+    this._inchiostroElement = value;
+  }
+  private _passionsElement: HTMLDivElement | null = null;
+  public get passionsElement(): HTMLDivElement | null {
+    return this._passionsElement;
+  }
+  public set passionsElement(value: HTMLDivElement | null) {
+    this._passionsElement = value;
+  }
+  private _projectsElement: HTMLDivElement | null = null;
+  public get projectsElement(): HTMLDivElement | null {
+    return this._projectsElement;
+  }
+  public set projectsElement(value: HTMLDivElement | null) {
+    this._projectsElement = value;
+  }
+
+  //TODO move interaction logic to a service
   constructor(private router: Router) {}
 
   public get clickCounter(): number {
@@ -54,6 +91,13 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit(): void {
+    //Save reference to elements DIV to be used in component
+    this.educationElement = document.getElementById('education-link') as HTMLDivElement | null;
+    this.workElement = document.getElementById('work-link') as HTMLDivElement | null;
+    this.inchiostroElement = document.getElementById('inchiostro-link') as HTMLDivElement | null;
+    this.passionsElement = document.getElementById('passions-link') as HTMLDivElement | null;
+    this.projectsElement = document.getElementById('projects-link') as HTMLDivElement | null;
+
     const el = this.container.nativeElement;
     const meshColor: THREE.ColorRepresentation = 0x39fff0;
     const pointLightColor: THREE.ColorRepresentation = 0xfff5b6;
@@ -98,10 +142,10 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
         this.camera.position.z += 0.0075;
       }
       //Update click counter to reset work item interaction
-      /* if(this.clickCounter > 0) {
+      if(this.clickCounter > 0) {
         this.clickCounter -= 0.05;
-        this.updateWorkBlur();
-      } */
+        this.updateWorkBlur(this.workElement);
+      }
       knot.rotation.x += 0.005;
       knot.rotation.y += 0.004;
       controls.update();
@@ -123,7 +167,6 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
 
   //TODO add comments to method
   onZoomChange(): void {
-
     const educationElement = document.getElementById('education-link') as HTMLDivElement | null;
     if (educationElement && this.camera.position.z < 0.7) {
       this.isEducationValid = true;
@@ -139,22 +182,21 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
   }
 
   onClick(): void {
-    const workElement = document.getElementById('work-link') as HTMLDivElement | null;
-    if (workElement && this.clickCounter >= this.clickGoal) {
+    if (this.workElement && this.clickCounter >= this.clickGoal) {
       this.isWorkValid = true;
-      workElement.classList.remove('static-waving-blur');
-      workElement.classList.add('valid-project-item');
-      workElement.style.filter = 'none';
-    } else if (workElement && !this.isWorkValid && this.clickCounter < this.clickGoal) {
+      this.workElement.classList.remove('static-waving-blur');
+      this.workElement.classList.add('valid-project-item');
+      this.workElement.style.filter = 'none';
+    } else if (this.workElement && !this.isWorkValid && this.clickCounter < this.clickGoal) {
       if(this.clickCounter < 1 && this.clickCounter > 0) {
         this.clickCounter = 0;
       } else {
         this.clickCounter += 1;
-        workElement.classList.remove('static-waving-blur');
-        workElement.style.filter = 'blur(' + (1 - this.clickCounter/this.clickGoal ) * 8 + 'px) brightness(' + 7.2 / this.camera.position.z * 100 + '%)';
+        this.workElement.classList.remove('static-waving-blur');
+        this.updateWorkBlur(this.workElement);
       }
     } else if(!this.isWorkValid) {
-      workElement?.classList.add('static-waving-blur');
+      this.workElement?.classList.add('static-waving-blur');
     }
   }
 
@@ -166,6 +208,12 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
     this.renderer.setSize(el.clientWidth, el.clientHeight);
   };
 
+  private updateWorkBlur(workElement: HTMLDivElement | null) {
+    if (workElement) {
+      workElement.style.filter = 'blur(' + (1 - this.clickCounter / this.clickGoal) * 8 + 'px) brightness(' + this.clickCounter / this.clickGoal * 100 + '%)';
+    }
+  }
+
   ngOnDestroy(): void {
     if (this.frameId !== null) cancelAnimationFrame(this.frameId);
     window.removeEventListener('resize', this.onResize);
@@ -174,19 +222,18 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
 
   skipInteraction() {
     this.isEducationValid = true;
-    this.validateElement('education-link');
+    this.validateElement(this.educationElement);
     this.isWorkValid = true;
-    this.validateElement('work-link');
+    this.validateElement(this.workElement);
     this.isProjectsValid = true;
-    this.validateElement('projects-link');
+    this.validateElement(this.projectsElement);
     this.isInchiostroValid = true;
-    this.validateElement('inchiostro-link');
+    this.validateElement(this.inchiostroElement);
     this.isPassionsValid = true;
-    this.validateElement('passions-link');
+    this.validateElement(this.passionsElement);
   }
 
-  validateElement(elementId: string): void {
-    const element = document.getElementById(elementId) as HTMLDivElement | null;
+  validateElement(element: HTMLDivElement | null): void {
     element?.classList.remove('static-waving-blur');
     element?.classList.add('valid-project-item');
     element? element.style =  '""' : '';
