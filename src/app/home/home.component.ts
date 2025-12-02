@@ -31,6 +31,7 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
   public isPassionsValid: boolean = false;
 
   private _clickCounter: number = 0;
+  private _clickGoal: number = 50;
 
   constructor(private router: Router) {}
 
@@ -39,6 +40,13 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
   }
   public set clickCounter(value: number) {
     this._clickCounter = value;
+  }
+
+  public get clickGoal(): number {
+    return this._clickGoal;
+  }
+  public set clickGoal(value: number) {
+    this._clickGoal = value;
   }
 
   open(path: string) {
@@ -92,7 +100,7 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
       //Update click counter to reset work item interaction
       /* if(this.clickCounter > 0) {
         this.clickCounter -= 0.05;
-        this.onClick();
+        this.updateWorkBlur();
       } */
       knot.rotation.x += 0.005;
       knot.rotation.y += 0.004;
@@ -132,19 +140,18 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
 
   onClick(): void {
     const workElement = document.getElementById('work-link') as HTMLDivElement | null;
-    if (workElement && this.clickCounter >= 50) {
+    if (workElement && this.clickCounter >= this.clickGoal) {
       this.isWorkValid = true;
       workElement.classList.remove('static-waving-blur');
       workElement.classList.add('valid-project-item');
       workElement.style.filter = 'none';
-    } else if (workElement && !this.isWorkValid && this.clickCounter < 50) {
+    } else if (workElement && !this.isWorkValid && this.clickCounter < this.clickGoal) {
       if(this.clickCounter < 1 && this.clickCounter > 0) {
         this.clickCounter = 0;
       } else {
         this.clickCounter += 1;
         workElement.classList.remove('static-waving-blur');
-        workElement.style.filter = 'blur(' + (50-this.clickCounter)*10/50 + 'px) brightness(' + 7.2 / this.camera.position.z * 100 + '%)';
-        console.log(workElement.style.filter);
+        workElement.style.filter = 'blur(' + (1 - this.clickCounter/this.clickGoal ) * 8 + 'px) brightness(' + 7.2 / this.camera.position.z * 100 + '%)';
       }
     } else if(!this.isWorkValid) {
       workElement?.classList.add('static-waving-blur');
