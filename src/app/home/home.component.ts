@@ -30,7 +30,16 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
   public isInchiostroValid: boolean = false;
   public isPassionsValid: boolean = false;
 
+  private _clickCounter: number = 0;
+
   constructor(private router: Router) {}
+
+  public get clickCounter(): number {
+    return this._clickCounter;
+  }
+  public set clickCounter(value: number) {
+    this._clickCounter = value;
+  }
 
   open(path: string) {
     this.router.navigate([path]);
@@ -80,6 +89,11 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
       if(this.camera.position.z < 7.2) {
         this.camera.position.z += 0.0075;
       }
+      //Update click counter to reset work item interaction
+      /* if(this.clickCounter > 0) {
+        this.clickCounter -= 0.05;
+        this.onClick();
+      } */
       knot.rotation.x += 0.005;
       knot.rotation.y += 0.004;
       controls.update();
@@ -93,8 +107,13 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
     controls.addEventListener('change', () => {
       this.onZoomChange();
     });
+
+    el.addEventListener('click', () => {
+      this.onClick();
+    });
   }
 
+  //TODO add comments to method
   onZoomChange(): void {
 
     const educationElement = document.getElementById('education-link') as HTMLDivElement | null;
@@ -106,9 +125,29 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
     } else if (educationElement && !this.isEducationValid && this.camera.position.z < 7.2) {
       educationElement.classList.remove('static-waving-blur');
       educationElement.style.filter = 'blur(' + this.camera.position.z + 'px) brightness(' + 7.2 / this.camera.position.z * 100 + '%)';
-      console.log(educationElement.style.filter);
     } else if(!this.isEducationValid) {
       educationElement?.classList.add('static-waving-blur');
+    }
+  }
+
+  onClick(): void {
+    const workElement = document.getElementById('work-link') as HTMLDivElement | null;
+    if (workElement && this.clickCounter >= 50) {
+      this.isWorkValid = true;
+      workElement.classList.remove('static-waving-blur');
+      workElement.classList.add('valid-project-item');
+      workElement.style.filter = 'none';
+    } else if (workElement && !this.isWorkValid && this.clickCounter < 50) {
+      if(this.clickCounter < 1 && this.clickCounter > 0) {
+        this.clickCounter = 0;
+      } else {
+        this.clickCounter += 1;
+        workElement.classList.remove('static-waving-blur');
+        workElement.style.filter = 'blur(' + (50-this.clickCounter)*10/50 + 'px) brightness(' + 7.2 / this.camera.position.z * 100 + '%)';
+        console.log(workElement.style.filter);
+      }
+    } else if(!this.isWorkValid) {
+      workElement?.classList.add('static-waving-blur');
     }
   }
 
